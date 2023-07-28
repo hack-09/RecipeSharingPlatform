@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Food Recipe Website</title>
+    <style>
+        /* Reset default browser styles */
+        @import url('https://fonts.googleapis.com/css2?family=Calligraffitti&family=Lilita+One&family=Roboto+Slab:wght@700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            line-height: 1.6;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-margin: 0px;
+        }
+
+
+        /* Add your custom styles here */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+
+        :root {
+            --navbar-height: 59px;
+        }
+
+        /* Logo & Image */
+        .logo {
+            margin: 10px 34px;
+        }
+
+        .logo img {
+            height: 59px;
+            margin: 3px 6px;
+        }
+
+        /* Navigation bar */
+        .navbar {
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0px;
+            width: 95vw;
+            margin: auto;
+        }
+
+        .navbar ul {
+            position: absolute;
+            right: 50px;
+            display: flex;
+            font-family: 'Baloo Bhai', cursive;
+        }
+
+        .navbar::before {
+            content: "";
+            border-radius: 50px;
+            background-color: black;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            height: 100%;
+            width: 100%;
+            z-index: -1;
+            /* opacity: 0.7; */
+        }
+
+        .navbar ul li {
+            list-style: none;
+            color: white;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .navbar .user {
+            color: aquamarine;
+            text-decoration-line: underline;
+        }
+
+        .navbar ul li a {
+            display: block;
+            padding: 3px 20px;
+            border-radius: 20px;
+            color: aliceblue;
+            text-decoration: none;
+        }
+
+        .navbar ul li a:hover {
+            color: black;
+            background-color: white;
+        }
+
+        .menu-toggle {
+            display: none;
+        }
+
+        .menu-icon {
+            display: none;
+            width: 30px;
+            height: 30px;
+            background-color: #333;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .menu-icon::before,
+        .menu-icon::after {
+            content: '';
+            position: absolute;
+            background-color: #fff;
+            width: 100%;
+            height: 4px;
+            left: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-icon::before {
+            top: 8px;
+        }
+
+        .menu-icon::after {
+            top: 16px;
+        }
+
+        /* Home section */
+        #home {
+            display: flex;
+            height: 450px;
+            flex-direction: column;
+            padding: 3px 200px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #home::before {
+            content: "";
+            position: absolute;
+            background: url('img/startBg.jpg') no-repeat center center/cover;
+            background-color: rgba(0, 0, 0, 0.4);
+            background-blend-mode: darken;
+            top: 0px;
+            left: 0px;
+            height: 550px;
+            width: 100%;
+            z-index: -1;
+            /* opacity: 0.7; */
+        }
+
+        #home h1 {
+            color: white;
+            text-align: center;
+            font-family: 'Bree Serif', serif;
+        }
+
+        #home p {
+            color: white;
+            text-align: center;
+            font-size: 1.5rem;
+            font-family: 'Bree Serif', serif;
+        }
+
+        /* Services */
+        .recipe-section .box {
+            border: 2px solid brown;
+            padding: 70px;
+            margin: 15px 6px;
+            border-radius: 30px;
+            background-color: #f2f2f2;
+        }
+
+        .recipe-section .box img {
+            height: 160px;
+            margin: auto;
+            display: block;
+        }
+
+        .recipe-section .box p {
+            /* font-size: 1.3rem; */
+            font-family: 'Bree Serif', serif;
+        }
+
+        .recipe-section {
+            padding: 40px 0;
+            text-align: center;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            margin: 34px;
+            display: flex;
+        }
+
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-gap: 20px;
+            justify-items: center;
+        }
+
+        .recipe-grid h3 {
+            margin-bottom: 16px;
+        }
+
+        .view-all {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff4500;
+            color: #fff;
+            font-size: 16px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+
+        /* Footer */
+        footer {
+            padding: 20px;
+            background-color: #000000;
+            color: white;
+            text-align: center;
+        }
+
+        footer ul {
+            list-style: none;
+            margin-bottom: 5px;
+        }
+
+        footer ul li {
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        footer ul li a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .social-icons {
+            margin-top: 20px;
+        }
+
+        .social-icons img {
+            width: 50px !important;
+            height: 50px !important;
+            padding: 5px 5px;
+            margin: 0 20px;
+        }
+
+        /* utility class */
+        .h-primary {
+            font-size: 3.8rem;
+            padding: 12px;
+            font-family: 'Bree Serif', serif;
+        }
+
+        .h-secondary {
+            font-size: 2.3rem;
+            padding: 12px;
+            font-family: 'Bree Serif', serif;
+        }
+
+
+        .btn {
+            padding: 6px 20px;
+            border: 2px solid white;
+            background-color: #ff6f00;
+            color: white;
+            margin: 17px;
+            font-size: 1.5rem;
+            border-radius: 10px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #e65100;
+        }
+
+
+        hr {
+            height: 5px;
+            background: linear-gradient(to left, red, #00ff00, #0000ff);
+        }
+
+        .sectionSubmit {
+            /* background: url(https://source.unsplash.com/900x900/?food) center center/cover; */
+        }
+
+        .sectionExplore {
+            /* background: url(https://source.unsplash.com/900x900/?foody) center center/cover; */
+        }
+
+        .background {
+            height: 65vh;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.6);
+            background-blend-mode: darken;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .background p {
+            font-family: 'Calligraffitti', cursive;
+            width: 70%;
+            margin: 20px auto;
+            font-size: 1.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                display: none;
+                background-color: #fff;
+            }
+
+            #home {
+                height: 5000px;
+            }
+
+            .nav-links {
+                margin: 20px 0 0;
+                flex-direction: column;
+                display: none;
+            }
+
+            .nav-links li {
+                margin-left: 0;
+                margin-bottom: 10px;
+            }
+
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                appearance: none;
+                cursor: pointer;
+            }
+
+            .menu-icon {
+                display: block;
+            }
+
+            .menu-icon::before,
+            .menu-icon::after {
+                width: 70%;
+                left: 15%;
+            }
+
+            .menu-icon::before {
+                top: 12px;
+            }
+
+            .menu-icon::after {
+                top: 24px;
+            }
+
+            /* Show the navigation links when the toggle is checked */
+            .menu-toggle:checked~.nav-links {
+                display: flex;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="img/logo.png" alt="Website Logo">
+        </div>
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="menu-icon">Menu</label>
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="recipes.html">Browse Recipes</a></li>
+            <li><a href="create_recipe.html">Submit a Recipe</a></li>
+            <li><a href="/myRecipe">My Recipes</a></li>
+            <li id="user-status"></li>
+        </ul>
+    </nav>
+
+    <section id="home">
+        <h1 class="h-primary">Welcome to our Food Recipe Website</h1>
+        <p>Discover delicious recipes to satisfy your taste buds</p>
+        <a href="login.html" class="btn">Get Started</a>
+    </section>
+
+    <section class="recipe-section">
+        <div class="box">
+            <h2 class="h-secondary center">Trend Recipes</h2>
+            <div class="recipe-grid">
+                <a href="recipe-details.html">
+                    <img src="img/recipe1.jpg" alt="Recipe Image">
+                    <h3>Recipe 1</h3>
+                </a>
+            </div>
+            <div class="recipe-grid">
+                <a href="recipe-details.html">
+                    <img src="img/recipe1.jpg" alt="Recipe Image">
+                    <h3>Recipe 1</h3>
+                </a>
+            </div>
+            <a href="trend-recipes.html" class="view-all">View All</a>
+        </div>
+
+        <div class="box">
+            <h2 class="h-secondary center">Popular Recipes</h2>
+            <div class="recipe-grid">
+                <a href="recipe-details.html">
+                    <img src="img/recipe1.jpg" alt="Recipe Image">
+                    <h3>Recipe 1</h3>
+                </a>
+            </div>
+            <div class="recipe-grid">
+                <a href="recipe-details.html">
+                    <img src="img/recipe1.jpg" alt="Recipe Image">
+                    <h3>Recipe 1</h3>
+                </a>
+            </div>
+            <a href="#" class="view-all">View More</a>
+        </div>
+
+        <div class="box">
+            <h2 class="h-secondary center">New Recipes</h2>
+            <div class="recipe-grid">
+                <a href="recipe-details.html">
+                    <img src="img/recipe1.jpg" alt="Recipe Image">
+                    <h3>Recipe 1</h3>
+                </a>
+            </div>
+            <div class="recipe-grid">
+                <a href="recipe-details.html">
+                    <img src="img/recipe1.jpg" alt="Recipe Image">
+                    <h3>Recipe 1</h3>
+                </a>
+            </div>
+            <a href="#" class="view-all" id="view-all-trend-recipes">View More</a>
+
+        </div>
+    </section>
+
+    <footer>
+        <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+        </ul>
+        <p>&copy; 2023 Recipe Sharing Platform. All rights reserved.</p>
+        <div class="social-icons">
+            <!-- Social media icons go here -->
+            <a href=""><img src="img/facebook.png" alt=""></a>
+            <a href=""><img src="img/insta.png" alt=""></a>
+            <a href=""><img src="img/twitter.png" alt=""></a>
+            <a href=""><img src="img/mail.png" alt=""></a>
+            <a href=""><img src="img/phone.png" alt=""></a>
+        </div>
+    </footer>
+
+    <script>
+        // Wait for the document to finish loading
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get a reference to the "View All" link
+            var viewAllLink = document.getElementById('view-all-trend-recipes');
+            // Add a click event listener to the link
+            viewAllLink.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent the default link behavior (scrolling to top or navigating to a new page)
+
+                console.log('View All Trend Recipes clicked!');
+            });
+        });
+    </script>
+    <script>
+        // Check if the username is available (you can replace this with your logic) // Replace this with your username variable or logic
+
+        // Get the reference to the user-status element in the navigation
+        var userStatusElement = document.getElementById("user-status");
+
+        // If username is available, display "Welcome {username}", otherwise, display "Sign In"
+        if (username) {
+            userStatusElement.innerHTML = "Welcome " + username;
+        } else {
+            userStatusElement.innerHTML = '<a href="login.html">Sign In</a>';
+        }
+    </script>
+</body>
+
+</html>

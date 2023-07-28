@@ -1,0 +1,59 @@
+doctype html 
+html 
+    head 
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Recipes | Food Recipe Website
+        style 
+          include ../public/navbar.css
+        block scripts 
+        block style
+    body 
+        nav.navbar.h-nav-resp#myTopnav
+          //- label.menu-icon(for="menu-toggle", class="menu-icon") ☰
+          div.logo
+            img(src="img/logo.png", alt="Website Logo")
+          ul.nav-links.v-class-resp
+            li
+              a(href="/") Home
+            li
+              a(href="/recipeList") Browse Recipes
+            li
+              a(href="/create_recipe") Submit a Recipe
+            li
+              a(href="/myRecipe") My Recipes
+            if username
+              li.user Welcome #{username}
+          div.burger(onclick="myFunction()")
+            .line
+            .line
+            .line
+    
+        block content 
+        //- to add body part here
+
+        footer
+          ul
+            li.footerHead
+              | &copy; 2023 Recipe Sharing Platform. All rights reserved &nbsp;&nbsp;|
+            li
+              a(href="/about") About Us
+            li
+              a(href="/contact") Contact
+            li
+              a(href="/privacy") Privacy Policy
+            li
+              a(href="/terms") Terms of Service
+          div.social-icons
+            a(href="https://www.facebook.com/")
+              img(src="img/facebook.png", alt="")
+            a(href="https://www.instagram.com/")
+              img(src="img/insta.png", alt="")
+            a(href="https://twitter.com")
+              img(src="img/twitter.png", alt="")
+            a(href="https://mail.google.com/?")
+              img(src="img/mail.png", alt="")
+            a(href="tele+")
+              img(src="img/phone.png", alt="")
+        
+        script(src="nav.js")

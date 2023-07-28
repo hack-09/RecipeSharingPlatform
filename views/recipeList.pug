@@ -1,0 +1,38 @@
+//- ***
+extends base.pug
+
+block style 
+    style 
+        include ../public/recipes.css
+
+block content
+    section#recipes
+      h1.h-primary Recipes
+      box.box 
+        // Add the search form
+        form(action='/recipeList', method='GET')
+          //- label(for='search') Search Recipe:
+          input(type='text', name='search', id='search', placeholder='Enter keywords...')
+          button(type='submit') Search
+  
+        form(action='/recipeList', method='GET')
+          //- label(for='category') Select Category:
+          select(name='category', id='category')
+            option(value="") All
+            option(value="Breakfast") Breakfast
+            option(value="Lunch") Lunch
+            option(value="Dinner") Dinner
+            option(value="Dessert") Dessert
+            // Add more categories as needed
+          button(type='submit') Filter
+
+      div.recipe-grid
+        if recipes.length > 0
+            each recipe in recipes
+              div.recipe-card
+                img(src=`ImageData/${recipe.image}`, alt='Recipe Image')
+                h3 #{recipe.title}
+                p #{recipe.description}
+                a.read-more(href=`/recipeCard?id=${recipe._id}`) Read More
+        else
+          p No recipes found.

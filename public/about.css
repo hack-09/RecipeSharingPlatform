@@ -1,0 +1,57 @@
+/* Style for the About page */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: seashell;
+  }
+
+  .about-section {
+    max-width: 800px;
+    min-height: 61.5vh;
+    margin: 0 auto;
+    padding: 40px;
+  }
+  
+  .about-section h1 {
+    font-size: 30px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .about-section p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  
+  /* Additional styling for the About page */
+  /* Customize these styles based on your design preferences */
+  
+  /* Example styling for an image or logo in the About section */
+  .about-section img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  /* Example styling for a call-to-action button in the About section */
+  .about-section .btn {
+    display: inline-block;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .about-section .btn:hover {
+    background-color: #555;
+  }
+  
+  /* Additional styling for the footer */
+  /* Your footer styles */
+  

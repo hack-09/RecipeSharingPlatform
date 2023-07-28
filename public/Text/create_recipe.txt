@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Recipe</title>
+  <link rel="stylesheet" href="create_recipe.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Create Recipe</h1>
+    <form id="recipeForm" action="/recipes" method="POST" enctype="multipart/form-data">
+      <label for="title">Title</label>
+      <input type="text" id="title" name="title" required>
+      
+      <label for="description">Description</label>
+      <textarea id="description" name="description" required></textarea>
+      
+      <label for="ingredients">Ingredients</label>
+      <textarea id="ingredients" name="ingredients" required></textarea>
+      
+      <label for="instructions">Instructions</label>
+      <textarea id="instructions" name="instructions" required></textarea>
+      
+      <label for="cookingTime">Cooking Time</label>
+      <input type="text" id="cookingTime" name="cookingTime" required>
+      
+      <label for="difficulty">Difficulty Level</label>
+      <select id="difficulty" name="difficulty" required>
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Hard">Hard</option>
+      </select>
+      
+      <label for="servingSize">Serving Size</label>
+      <input type="text" id="servingSize" name="servingSize" required>
+      
+      <label for="image">Image</label>
+      <input type="file" id="image" name="image" required>
+      
+      <button type="submit">Save Recipe</button>
+    </form>
+  </div>
+<script src="Recipe.js"></script>
+</body>
+</html>

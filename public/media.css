@@ -1,0 +1,55 @@
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        display: none;
+        background-color: #fff;
+    }
+    #home{
+        height: 5000px;
+    }
+
+    .nav-links {
+        margin: 20px 0 0;
+        flex-direction: column;
+        display: none;
+    }
+
+    .nav-links li {
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+
+    .menu-toggle {
+        display: block;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        appearance: none;
+        cursor: pointer;
+    }
+
+    .menu-icon {
+        display: block;
+    }
+
+    .menu-icon::before,
+    .menu-icon::after {
+        width: 70%;
+        left: 15%;
+    }
+
+    .menu-icon::before {
+        top: 12px;
+    }
+
+    .menu-icon::after {
+        top: 24px;
+    }
+
+    /* Show the navigation links when the toggle is checked */
+    .menu-toggle:checked~.nav-links {
+        display: flex;
+    }
+
+}

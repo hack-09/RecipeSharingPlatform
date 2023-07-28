@@ -1,0 +1,82 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Food Recipe Website
+    link(rel="stylesheet", type="text/css", href="home.css")
+    
+  body
+    nav.navbar.h-nav-resp#myTopnav
+      //- label.menu-icon(for="menu-toggle", class="menu-icon") ☰
+      div.logo
+        img(src="img/logo.png", alt="Website Logo")
+      ul.nav-links.v-class-resp
+        li
+          a(href="/") Home
+        li
+          a(href="/recipeList") Browse Recipes
+        li
+          a(href="/create_recipe") Submit a Recipe
+        li
+          a(href="/myRecipe") My Recipes
+        if username
+          li.user Welcome #{username}
+          li
+            a(href="/logout") Logout
+        else
+          li
+            a(href="login.html") Sign In
+      div.burger(onclick="myFunction()")
+        .line
+        .line
+        .line
+
+    section#home
+      h1.h-primary Welcome to our Food Recipe Website
+      p Share and Discover Delicious Recipes from Around the World!
+      p Discover delicious recipes to satisfy your taste buds
+      a.btn(href="/recipeList") Get Started 
+
+    hr
+
+    section.sectionSubmit.background
+      h1.h-primary Share Your Recipes
+      p Join our community of food enthusiasts and share your favorite recipes with the world. Whether it's a family secret or a unique creation, we'd love to see what you have in store!
+      a.btn(href="/create_recipe") Submit Recipe
+
+    hr
+    
+    section.sectionExplore.background
+      h1.h-primary Explore Delicious Recipes
+      p Browse through a wide collection of mouthwatering recipes contributed by our passionate community. From appetizers to desserts, there's something for everyone!
+      a.btn(href="/recipeList") Explore Recipes
+    
+    hr
+    
+    footer
+      ul
+        li.footerHead
+          | &copy; 2023 Recipe Sharing Platform. All rights reserved &nbsp;&nbsp;|
+        li
+          a(href="/about") About Us
+        li
+          a(href="/contact") Contact
+        li
+          a(href="/privacy") Privacy Policy
+        li
+          a(href="/terms") Terms of Service
+      div.social-icons
+        a(href="")
+          img(src="img/facebook.png", alt="")
+        a(href="")
+          img(src="img/insta.png", alt="")
+        a(href="")
+          img(src="img/twitter.png", alt="")
+        a(href="")
+          img(src="img/mail.png", alt="")
+        a(href="")
+          img(src="img/phone.png", alt="")
+    
+    script(src="nav.js")
+

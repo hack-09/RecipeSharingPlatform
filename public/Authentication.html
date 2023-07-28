@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Authentication Page</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="Authentication.css">
+</head>
+<body>
+  <div class="container">
+
+    <form id="registrationForm"  action="/register" method= "post">
+      <h1>Registration</h1>
+      <div class="input-container">
+        <!-- <label for="loginUsername">Username</label> -->
+        <i class="fa fa-user icon"></i>
+        <input type="text" name="username" id="loginUsername" placeholder="Username" required>
+      </div>
+      <div class="input-container">
+        <!-- <label for="loginPassword">Password</label> -->
+        <i class="fa fa-key icon"></i>
+        <input type="password" name="password" id="loginPassword" placeholder="Password" required>
+      </div>
+      <div class="input-container">
+        <!-- <label for="email">Email</label> -->
+        <i class="fa fa-envelope icon"></i>
+        <input type="email" name="email" id="email" placeholder="Email" required>
+      </div>
+      <div class="box">
+        <label for="checkbox" class="checkbox" >Show Password</label>
+        <input type="checkbox" class="checkbox" onclick="myFunction()">
+      </div>
+      <p class="switch-section">By creating an account you agree to our <a href="/terms" id="showLogin">Terms & Privacy</a>.</p>
+      <button type="submit">Register</button>
+      <p class="switch-section">Already have an account? <a href="login.html" id="showLogin">Login</a></p>
+    </form>
+
+  </div>
+  <script>
+    function myFunction() {
+      var x = document.getElementById("password");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+  </script>
+</body>
+</html>

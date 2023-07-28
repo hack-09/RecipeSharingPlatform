@@ -1,0 +1,101 @@
+
+  body {
+    font-family: Arial, sans-serif;
+    background: url(img/bg2.jpg) no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 20px;
+    overflow: hidden;
+  }
+  
+  .container {
+    max-width: 400px;
+    margin: 20vh auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1 {
+    text-align: center;
+    color: rgb(0, 19, 94);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    margin-bottom: 5px;
+  }
+  .icon {
+    padding: 5px;
+    background: dodgerblue;
+    color: white;
+    font-size: 30px;
+    min-width: 50px;
+    text-align: center;
+  }
+  .input-container {
+    display: -ms-flexbox; /* IE10 */
+    display: flex;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  input {
+    width: 100%;
+  padding: 10px;
+  outline: none;
+    opacity: 0.9;
+    font-size: 20px;
+    /* border: none; */
+    border-radius: 5px;
+    outline: none;
+    /* margin-bottom: 20px; */
+  }
+  
+  button {
+    margin-top: 10px;
+    background-color: #FF6347;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    font-weight: bold;
+    border-radius: 10px;
+    font-size: 18px;
+  }
+  
+  button:hover {
+    background-color: #FF6347;
+    opacity: 0.8;
+  }
+
+  span{
+    cursor: pointer;
+  }
+  .checkbox{
+    width: auto;
+  }
+
+  
+@media (max-width: 800px) {
+  .body{
+    font-size: 5rem;
+  }
+  .container{
+    max-width:767px ;
+  }
+  input{
+    font-size: 13px;
+  }
+  .icon{
+    font-size: 20px;
+  }
+}

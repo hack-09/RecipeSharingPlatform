@@ -1,0 +1,32 @@
+//- ***
+extends base.pug
+
+block style 
+    style 
+        include ../public/navbar.css
+        include ../public/myRecipe.css
+
+block content
+    .container.background
+      h1 My Recipe
+      if recipes.length > 0
+        each recipe in recipes
+          .card.background
+            h2 #{recipe.title}
+            .box.background
+              .text-box.background
+                p.desc #{recipe.description}
+                p Ingredients: 
+                p.detail #{recipe.ingredients}
+                p Instructions:
+                p.detail #{recipe.instructions}
+                p Cooking Time:
+                p.detail #{recipe.cookingTime}
+                p Difficulty:
+                p.detail #{recipe.difficulty}
+                p Serving Size:
+                p.detail #{recipe.servingSize}
+                //- p Created By: #{recipe.username} 
+              img(src=`ImageData/${recipe.image}`, alt='Recipe Image')
+      else
+        p No recipes found

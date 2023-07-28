@@ -1,0 +1,20 @@
+//- ***
+extends base.pug
+
+block style 
+    style 
+        include ../public/navbar.css
+        include ../public/contact.css
+
+block content
+    main
+      section.contact
+        h2.text-center Contact Us
+        p Have a question or feedback? Reach out to us!
+
+        form.form(method="POST", action="process_contact.php")
+          input.form-input(type="text", name="name", id="name", placeholder="Enter your name")
+          input.form-input(type="text", name="phone", id="phone", placeholder="Enter your phone")
+          input.form-input(type="text", name="email", id="email", placeholder="Enter your email")
+          textarea.form-input(name="text", id="text", cols="30", rows="10", placeholder="Elaborate your concern")
+          button.btn.btn-sm.btn-dark Submit

@@ -1,0 +1,373 @@
+/* Reset default browser styles */
+@import url('https://fonts.googleapis.com/css2?family=Calligraffitti&family=Lilita+One&family=Roboto+Slab:wght@700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: 1.6;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-margin: 0px;
+}
+
+
+/* Add your custom styles here */
+body {
+    font-family: Arial, sans-serif;
+}
+
+
+:root {
+    --navbar-height: 59px;
+}
+
+/* Logo & Image */
+.logo {
+    margin: 10px 34px;
+}
+
+.burger img,.logo img {
+    height: 59px;
+    margin: 3px 6px;
+}
+
+/* Navigation bar */
+.navbar {
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0px;
+    width: 95vw;
+    margin: auto;
+}
+
+.navbar ul {
+    position: absolute;
+    right: 50px;
+    display: flex;
+    font-family: 'Baloo Bhai', cursive;
+}
+
+.navbar::before {
+    content: "";
+    border-radius: 50px;
+    background-color: black;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    /* opacity: 0.7; */
+}
+
+.navbar ul li {
+    list-style: none;
+    color: white;
+    justify-content: center;
+    font-size: 1.3rem;
+}
+
+.navbar .user {
+    color: aquamarine;
+    text-decoration-line: underline;
+}
+
+.navbar ul li a {
+    display: block;
+    padding: 3px 20px;
+    border-radius: 20px;
+    color: aliceblue;
+    text-decoration: none;
+}
+
+.navbar ul li a:hover {
+    color: black;
+    background-color: white;
+}
+
+
+/* Home section */
+#home {
+    /* position: relative; */
+    display: flex;
+    height: 450px;
+    flex-direction: column;
+    padding: 3px 200px;
+    justify-content: center;
+    align-items: center;
+}
+
+#home::before {
+    content: "";
+    position: absolute;
+    background: url('img/startBg.jpg') no-repeat center center/cover;
+    background-color: rgba(18, 16, 16, 0.5);
+    background-blend-mode: darken;
+    top: 0px;
+    left: 0px;
+    height: 550px;
+    width: 100%;
+    z-index: -1;
+    /* opacity: 0.7; */
+}
+
+#home h1 {
+    color: white;
+    text-align: center;
+    font-family: 'Bree Serif', serif;
+}
+
+#home p {
+    color: white;
+    text-align: center;
+    font-size: 1.5rem;
+    font-family: 'Bree Serif', serif;
+}
+
+/* Services */
+.recipe-section .box {
+    border: 2px solid brown;
+    padding: 70px;
+    margin: 15px 6px;
+    border-radius: 30px;
+    background-color: #f2f2f2;
+}
+
+.recipe-section .box img {
+    height: 160px;
+    margin: auto;
+    display: block;
+}
+
+.recipe-section .box p {
+    /* font-size: 1.3rem; */
+    font-family: 'Bree Serif', serif;
+}
+
+.recipe-section {
+    padding: 40px 0;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin: 34px;
+    display: flex;
+}
+
+.recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 20px;
+    justify-items: center;
+}
+
+.recipe-grid h3 {
+    margin-bottom: 16px;
+}
+
+.view-all {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff4500;
+    color: #fff;
+    font-size: 16px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+
+/* Footer */
+footer {
+    padding: 20px;
+    background-color: #000000;
+    color: white;
+    text-align: center;
+}
+
+footer ul {
+    list-style: none;
+    margin-bottom: 5px;
+}
+
+footer ul li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+footer ul li a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.social-icons {
+    margin-top: 20px;
+}
+
+.social-icons img {
+    width: 50px !important;
+    height: 50px !important;
+    padding: 5px 5px;
+    margin: 0 20px;
+}
+
+/* utility class */
+.h-primary {
+    font-size: 3.8rem;
+    padding: 12px;
+    font-family: 'Bree Serif', serif;
+}
+
+.h-secondary {
+    font-size: 2.3rem;
+    padding: 12px;
+    font-family: 'Bree Serif', serif;
+}
+
+
+.btn {
+    padding: 6px 20px;
+    border: 2px solid white;
+    background-color: #ff6f00;
+    color: white;
+    margin: 17px;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #e65100;
+}
+
+
+hr {
+    height: 5px;
+    background: linear-gradient(to left, red, #00ff00, #0000ff);
+}
+
+.sectionSubmit {
+    /* background: url(https://picsum.photos/500/1500) center center/cover; */
+    /* background: url(img/bg.jpg) center center/cover; */
+    background: linear-gradient(rgb(5, 13, 85),rgb(69, 24, 141),rgb(3, 0, 85));
+}
+
+.sectionExplore {
+    /* background: url(https://source.unsplash.com/900x900/?foody) center center/cover; */
+    /* background: url(img/bg.jpg) center center/cover; */
+    background: linear-gradient(rgb(255, 119, 1),rgb(255, 169, 71),rgb(135, 81, 0));
+}
+
+.background {
+    height: 65vh;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: darken;
+    padding: 40px;
+    text-align: center;
+}
+
+.background p {
+    font-family: 'Calligraffitti', cursive;
+    width: 70%;
+    margin: 20px auto;
+    font-size: 1.8rem;
+}
+
+.burger{
+    display: none;
+    position: absolute;
+    cursor: pointer;
+    right: 5%;
+    top: 25px;
+}
+.line{
+    width: 35px;
+    background-color: white;
+    height: 4px;
+    margin: 3px 8px;
+}
+
+  
+
+@media (max-width: 1140px) {
+    .nav-links{
+        position: inherit !important; 
+        flex-direction: column;
+        padding-bottom: 15px;
+    }
+    .navbar::before{
+        border-radius: 0;
+    }
+    .navbar{
+        width: 100%;
+        /* position: fixed; */
+        text-align: center;
+        flex-direction: column;
+        transition: all 0.7s ease-out;
+        height: auto;
+        z-index: 10;
+    }
+    .navbar.responsive {overflow: hidden;}
+    .burger{
+        display: block;
+    }
+    .h-nav-resp{
+        height: 80px;
+    }
+    .v-class-resp{
+        display: none !important;
+        /* overflow: hidden; */
+    }
+    .navbar.responsive a {
+        float: none;
+        display: block;
+        /* text-align: left; */
+    }
+
+    .h-primary{
+        font-size: 2.2rem;
+        font-style: normal;
+    }
+    #home{
+        padding: 20px 2px;
+        position: relative;
+        font-style:oblique;
+        height: fit-content;
+        overflow: hidden;
+    }
+    #home::before{
+        height: 550px;
+    }
+    #home::after{
+        height: fit-content;
+        /* height: 550px; */
+    }
+    
+    section p{
+        font-size: 1.2rem !important;
+    }
+    .background {
+        height: fit-content;
+        padding: 30px 5px;
+    }
+    .btn{
+        font-size: 1rem;
+    }
+    footer{
+        font-size: 0.5rem;
+    }
+    .footerHead{
+        margin: 0 20%;
+    }
+    .social-icons img {
+        width: 41px !important;
+        height: 41px !important;
+        margin: 0;
+    }
+ 
+}

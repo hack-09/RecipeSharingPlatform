@@ -1,0 +1,115 @@
+//- ***
+extends base.pug
+
+block style 
+    style 
+        include ../public/navbar.css
+        include ../public/create_recipe.css
+
+block content
+    .container
+      h1 Create Recipe
+      form#recipeForm(action="/recipes", method="POST", enctype="multipart/form-data")
+        label(for="title") Title
+        input#title(type="text", name="title", required)
+
+        label(for="description") Description
+        textarea#description(name="description", required)
+
+        label(for="ingredients") Ingredients
+        textarea#ingredients(name="ingredients", wrap="soft", required)
+
+        label(for="instructions") Instructions
+        textarea#instructions(name="instructions", wrap="soft", required)
+
+        label(for="cookingTime") Cooking Time
+        input#cookingTime(type="text", name="cookingTime", required)
+
+        label(for="difficulty") Difficulty Level
+        select#difficulty(name="difficulty", required)
+          option(value="Easy") Easy
+          option(value="Medium") Medium
+          option(value="Hard") Hard
+
+        label(for="category") Category 
+        select#difficulty(name="category", required)
+          option(value="BreakFast") BreakFast
+          option(value="Lunch") Lunch
+          option(value="Dinner") Dinner
+          option(value="Dessert") Dessert
+
+        label(for="servingSize") Serving Size
+        input#servingSize(type="text", name="servingSize", required)
+
+        label(for="image") Image
+        input#image(type="file", name="image", required)
+
+        input(type="hidden", id="username", name="username", value=username)
+
+        button(type="submit") Save Recipe
+
+
+
+        script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+
+        script.
+          $(document).ready(function() {
+            // Function to handle the instructions textarea
+            $('#instructions').on('click', function() {
+              var textarea = $(this);
+              if (textarea.val() === '') {
+                textarea.val('1. '); // Add the placeholder text '1. ' if the textarea is empty
+              }
+            });
+
+            $('#instructions').on('keydown', function(e) {
+              if (e.keyCode === 13) {  // 13 is the keycode for the Enter key
+                e.preventDefault();   // Prevent the default Enter key behavior (creating a new line)
+
+                var textarea = $(this);
+                var currentValue = textarea.val();
+                var sequenceNumber = 1;
+
+                // Check if there is any content in the textarea
+                if (currentValue.trim().length > 0) {
+                  var lines = currentValue.split('\n');
+                  sequenceNumber = lines.length + 1;
+                } else {
+                  // If there's no content, make sure '1' is present
+                  textarea.val('1. ');
+                  return; // No need to append anything else
+                }
+
+                // Append the next initial sequence to the textarea
+                textarea.val(currentValue + '\n' + sequenceNumber + '. ');
+              }
+            });
+
+            // Function to handle the ingredients textarea (similar logic as the instructions textarea)
+            $('#ingredients').on('click', function() {
+              var textarea = $(this);
+              if (textarea.val() === '') {
+                textarea.val('1. '); // Add the placeholder text '1. ' if the textarea is empty
+              }
+            });
+
+            $('#ingredients').on('keydown', function(e) {
+              if (e.keyCode === 13) {
+                e.preventDefault();
+
+                var textarea = $(this);
+                var currentValue = textarea.val();
+                var sequenceNumber = 1;
+
+                if (currentValue.trim().length > 0) {
+                  var lines = currentValue.split('\n');
+                  sequenceNumber = lines.length + 1;
+                } else {
+                  textarea.val('1. ');
+                  return;
+                }
+
+                textarea.val(currentValue + '\n' + sequenceNumber + '. ');
+              }
+            });
+          });

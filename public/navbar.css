@@ -1,0 +1,159 @@
+
+:root{
+    --navbar-height:59px;
+}
+
+/* Logo & Image */
+.logo{
+    margin: 10px 34px;
+}
+
+.logo img{
+    height: 59px;
+    margin: 3px 6px;
+}
+/* Navigation bar */
+.navbar{
+    display: flex;
+    align-items: center; 
+    position: sticky;
+    top: 0px;
+    /* width: 95vw; */
+    /* margin: auto; */
+}
+
+.navbar ul{
+    position: absolute;
+    right: 50px;
+    display: flex; 
+    font-family: 'Baloo Bhai',cursive;
+}
+
+.navbar::before{
+    content: "";
+    /* border-radius: 50px; */
+    background-color: black;
+    position:absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    /* opacity: 0.8; */
+}
+
+.navbar ul li{ 
+    list-style: none;
+    justify-content: center;
+    font-size: 1.3rem;
+}
+
+.navbar ul li a{
+    color: white;
+    display: block;
+    padding: 3px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+}
+.navbar ul li a:hover{
+    color: black;
+    background-color: white;
+}
+
+
+/* Footer */
+footer {
+    padding: 20px;
+    background-color: #000000;
+    color: white;
+    text-align: center;
+}
+
+footer ul {
+    list-style: none;
+    margin-bottom: 5px;
+}
+
+footer ul li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+footer ul li a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.social-icons {
+    margin-top: 20px;
+}
+
+.social-icons img {
+    width: 50px !important;
+    height: 50px !important;
+    padding: 5px 5px;
+    margin: 0 20px;
+}
+
+.burger{
+    display: none;
+    position: absolute;
+    cursor: pointer;
+    right: 5%;
+    top: 25px;
+}
+.line{
+    width: 35px;
+    background-color: white;
+    height: 4px;
+    margin: 3px 8px;
+}
+
+
+@media (max-width: 1014px) {
+    .nav-links{
+        position: inherit !important; 
+        flex-direction: column;
+        margin-right: 35px;
+        padding-bottom: 15px;
+    }
+    .navbar::before{
+        border-radius: 0;
+    }
+    .navbar{
+        width: 100%;
+        /* position: fixed; */
+        text-align: center;
+        flex-direction: column;
+        transition: all 0.7s ease-out;
+        height: auto;
+        z-index: 10;
+    }
+    .navbar.responsive {overflow: hidden;}
+    .burger{
+        display: block;
+    }
+    .h-nav-resp{
+        height: 80px;
+    }
+    .v-class-resp{
+        display: none !important;
+        /* overflow: hidden; */
+    }
+    .navbar.responsive a {
+        float: none;
+        display: block;
+        /* text-align: left; */
+    }
+    footer{
+        font-size: 0.6rem;
+    }
+    footer ul{
+        padding: 0 !important;
+    }
+    .social-icons img {
+        width: 37px !important;
+        height: 37px !important;
+        margin: 0;
+    }
+}

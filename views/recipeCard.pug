@@ -1,0 +1,70 @@
+
+extends base.pug
+
+block style 
+    style 
+        include ../public/navbar.css
+        include ../public/myRecipe.css
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css')
+block content
+    div.container#changing-bg
+      section#recipe-details
+        div.card.background
+          h2 #{recipe.title}
+          p.reference Created By: #{recipe.username} 
+          div.box.background
+            div.text-box.background
+              p.desc #{recipe.description}
+              p Ingredients: 
+              p.detail #{recipe.ingredients}
+              p Instructions:
+              p.detail #{recipe.instructions}
+              p Cooking Time:
+              p.detail #{recipe.cookingTime}
+              p Difficulty:
+              p.detail #{recipe.difficulty}
+              p Serving Size:
+              p.detail #{recipe.servingSize}
+            img(src=`ImageData/${recipe.image}`, alt='Recipe Image')
+          //- Add more recipe details here
+
+      // Comment Section
+      section#comments
+        h2.commentTitle 📝 Comment Section
+        //- Loop through each comment and display them
+        section.alineComment
+          each comment in recipe.comments
+            div.commentBox
+              div.comment
+                p.comment-author ~#{comment.author}
+                p.comment-date #{comment.date}
+              div.commentRate
+                p.comment-text #{comment.text}
+                //- p.rating-value Rate : #{comment.rating}
+                .star-rating
+                  //- Create 5 star elements using 
+                  each i in [1, 2, 3, 4, 5]
+                    if i <= comment.rating 
+                      i.fa.fa-star.star-filled
+                    else
+                      i.fa.fa-star
+
+
+      // Add the form to submit a new comment
+      div.userComment
+        form(action=`/recipeCard/${recipe._id}/comments`, method='POST')
+          label(for='comment-text') Comment:
+          input(type="text", id="comment-text", name="comment_text", placeholder="Your comment")
+          .process 
+            label(for='comment-author') By :
+            input(type="text", id="comment-author", name="comment_author", placeholder="Your name")
+            label(for='rating') Rating :
+            select#rating(name="rating", required)
+              option(value="1") 1&#9733;
+              option(value="2") 2&#9733;
+              option(value="3") 3&#9733;
+              option(value="4") 4&#9733;
+              option(value="5") 5&#9733;
+            button(type='submit') 
+              i.fa.fa-paper-plane
+
