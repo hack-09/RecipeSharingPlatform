@@ -9,12 +9,40 @@
   }
   
   .container {
-    max-width: 400px;
+    display: flex;
+    flex-direction: row;
+    max-width: 50vw;
     margin: 20vh auto;
     background-color: #fff;
-    padding: 20px;
+    /* padding: 20px; */
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .side{
+    background-color: #ff8000e4;
+    width: 25vw;
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .register{
+    background: url(./img/login.png);
+    background-size: cover;
+  }
+  .login{
+    background: url(./img/register.png);
+    background-size: cover;
+  }
+
+  .side p{
+    background-color: rgb(135, 174, 174);
+    border-radius: 25px;
+    text-align: center;
+    color: #ffffff;
+    font-size: xxx-large;
+    font-weight: bolder;
+    font-style: oblique;
+    margin: 0 auto;
   }
   
   h1 {
@@ -24,6 +52,7 @@
   }
   
   form {
+    margin: 20px;
     display: flex;
     flex-direction: column;
   }

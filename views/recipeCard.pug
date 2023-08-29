@@ -54,10 +54,9 @@ block content
       div.userComment
         form(action=`/recipeCard/${recipe._id}/comments`, method='POST')
           label(for='comment-text') Comment:
-          input(type="text", id="comment-text", name="comment_text", placeholder="Your comment")
+          input(type="text", id="comment-text", name="comment_text", placeholder="Your comment", required)
           .process 
-            label(for='comment-author') By :
-            input(type="text", id="comment-author", name="comment_author", placeholder="Your name")
+            input(type="hidden", id="comment-author", name="comment_author", value=loggedInUsername)
             label(for='rating') Rating :
             select#rating(name="rating", required)
               option(value="1") 1&#9733;

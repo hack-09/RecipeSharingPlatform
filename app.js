@@ -10,7 +10,7 @@ const cookieParser = require('cookie-parser'); // Step 2: Require cookie-parser
 const app = express();
 const port = 8000;
 
-mongoose.connect('mongodb://localhost/foodRecipe', { useNewUrlParser: true});
+mongoose.connect(process.env.DATABASE_URL || 'mongodb://localhost/recipesharingplatform');
 
 // ---------------------- Configure session and cookie-parser middleware
 app.use(cookieParser());
@@ -54,27 +54,22 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-  // Pass the username data to the home page template
   res.render("home", { username: req.session.username });
 });
 
 app.get("/contact", (req, res) => {
-  // Pass the username data to the home page template
   res.render("contact", { username: req.session.username });
 });
 
 app.get("/about", (req, res) => {
-  // Pass the username data to the home page template
   res.render("about", { username: req.session.username });
 });
 
 app.get("/privacy", (req, res) => {
-  // Pass the username data to the home page template
   res.render("privacy", { username: req.session.username });
 });
 
 app.get("/terms", (req, res) => {
-  // Pass the username data to the home page template
   res.render("terms", { username: req.session.username });
 });
 
@@ -128,9 +123,8 @@ app.post("/register", (req, res) => {
   var newUser = new authenticate(req.body);
   newUser.save()
     .then(() => {
-      // User registration successful, set isAuthenticated in the session
       req.session.isAuthenticated = true;
-      req.session.username = newUser.username; // You can store other user data in the session as well
+      req.session.username = newUser.username; 
       res.send('<script>alert("User registration successful."); window.location.href="/login";</script>');
     })
     .catch((error) => {
@@ -144,7 +138,6 @@ app.get("/create_recipe", checkLogin, (req, res) => {
   res.render("create_recipe", { username: req.session.username });
 });
 app.get('/recipes',   (req, res) => {
-  // Logic to fetch and send the recipes
   res.send('<script>alert("You Recipe Uploaded Successfully."); window.location.href="/create_recipe";</script>');
 });
 
@@ -158,9 +151,7 @@ app.set('view engine', 'pug');
 // My Recipe
 app.get('/myrecipe', checkLogin, async (req, res) => {
   try {
-    const loggedInUsername = req.session.username; // Retrieve the currently logged-in username
-
-    // Find recipes where the 'username' field matches the logged-in username
+    const loggedInUsername = req.session.username; 
     const recipes = await Recipe.find({ username: loggedInUsername });
 
     res.render('myRecipe', { recipes });
@@ -174,27 +165,20 @@ app.get('/myrecipe', checkLogin, async (req, res) => {
 //  ------------- Recipes List --------------
 app.get('/recipeList', checkLogin, async (req, res) => {
   try {
-    const category = req.query.category; // Get the selected category from the query parameter
-    const searchQuery = req.query.search; // Get the search query from the query parameter
-
-    // Create an empty filter object to store the filter conditions
+    const category = req.query.category; 
+    const searchQuery = req.query.search;
     const filter = {};
-
-    // Add the category filter if a category is selected
     if (category) {
       filter.category = category;
     }
 
-    // Add the search filter if a search query is provided
     if (searchQuery) {
-      // Use a regular expression to make the search case-insensitive and match partial keywords
       filter.$or = [
         { title: { $regex: searchQuery, $options: 'i' } },
         { description: { $regex: searchQuery, $options: 'i' } },
       ];
     }
 
-    // Find recipes that match the category and search filter
     const recipes = await Recipe.find(filter);
 
     res.render('recipeList', { recipes });
@@ -206,24 +190,16 @@ app.get('/recipeList', checkLogin, async (req, res) => {
 
 
 //  -------------------RecipeCard (Read more)------------------------------
-
 app.get('/recipeCard', async (req, res) => {
   try {
-    // Extract the recipe ID from the query parameter
     const recipeId = req.query.id;
-
-    // Use findById method with await to get the recipe details
     const recipe = await Recipe.findById(recipeId);
 
     if (!recipe) {
-      // Handle case when recipe is not found
       return res.send('Recipe not found.');
     }
-
-    // Render the recipeCard.pug template with the recipe details
-    res.render('recipeCard', { recipe });
+    res.render('recipeCard', { recipe,username: req.session.username });
   } catch (err) {
-    // Handle any errors that occur during the process
     console.error(err);
     res.status(500).send('Internal server error.');
   }
@@ -233,35 +209,25 @@ app.get('/recipeCard', async (req, res) => {
 // Add a new comment to the recipe
 app.post('/recipeCard/:id/comments', async (req, res) => {
   try {
-    // Extract the recipe ID from the URL parameter
     const recipeId = req.params.id;
-
-    // Find the recipe by ID
     const recipe = await Recipe.findById(recipeId);
 
     if (!recipe) {
       return res.status(404).send('Recipe not found.');
     }
+    const { comment_text, rating } = req.body;
+    const comment_author = req.session.username;
 
-    // Extract comment details from the request body
-    const { comment_text, comment_author, rating } = req.body;
-
-
-    // Create a new comment object
     const newComment = {
       text: comment_text,
       author: comment_author,
       rating: rating,
-      date: new Date() // Set the current date as the comment date
+      date: new Date() 
     };
 
-    // Add the new comment to the recipe's comments array
     recipe.comments.push(newComment);
 
-    // Save the updated recipe with the new comment
     await recipe.save();
-
-    // Redirect back to the recipeCard page to see the updated comments
     res.redirect(`/recipeCard?id=${recipeId}`);
   } catch (err) {
     console.error(err);

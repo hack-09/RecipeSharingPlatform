@@ -100,7 +100,7 @@ button{
 
 .recipe-card img {
     width: 100%;
-    height: auto;
+    height: 35vh;
     margin-bottom: 10px;
 }
 
@@ -111,6 +111,8 @@ button{
 
 .recipe-card p {
     font-size: 14px;
+    height: 9vh;
+    overflow: hidden;
     margin-bottom: 10px;
 }
 

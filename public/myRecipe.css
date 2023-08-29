@@ -268,7 +268,7 @@ form textarea {
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 20px;
-  margin: 10px;
+  margin: 10px 0;
 }
 
 
@@ -276,6 +276,7 @@ form button[type="submit"] {
   background-color: #007bff;
   color: #fff;
   height: 50px;
+  width: 65px;
   margin: 9px;
   border: none;
   border-radius: 5px;
@@ -348,9 +349,11 @@ footer {
 }
 
 @media screen and (max-width:950px) {
-  form {
-    flex-direction: column;
-  }
+  form button[type="submit"] {
+    height: 40px;
+    width: 50px;
+    margin: 13px 0;
+}
   form input {
     width: 90%
   }
@@ -362,6 +365,7 @@ footer {
 
   #rating {
     height: 40px;
+    width: 45px;
   }
   .comment-text{
     width: 100%;
@@ -377,6 +381,6 @@ footer {
     flex-direction: column;
   }
   i{
-    font-size: 2.3rem;
+    font-size: 2rem;
   }
 }
