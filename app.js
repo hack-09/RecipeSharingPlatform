@@ -10,7 +10,20 @@ const cookieParser = require('cookie-parser'); // Step 2: Require cookie-parser
 const app = express();
 const port = 8000;
 
-mongoose.connect(process.env.DATABASE_URL || 'mongodb://localhost/recipesharingplatform');
+require('dotenv').config(); // Load values from .env file
+
+console.log("DATABASE_URL:", process.env.DATABASE_URL);
+
+mongoose.connect(process.env.DATABASE_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => {
+  console.log('Connected to MongoDB');
+})
+.catch((error) => {
+  console.error('Error connecting to MongoDB:', error);
+});
 
 // ---------------------- Configure session and cookie-parser middleware
 app.use(cookieParser());
