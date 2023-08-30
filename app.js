@@ -1,4 +1,5 @@
 //--- app.js  ---
+require('dotenv').config(); // Load values from .env file
 
 const express = require("express");
 const path = require("path");
@@ -10,7 +11,6 @@ const cookieParser = require('cookie-parser'); // Step 2: Require cookie-parser
 const app = express();
 const port = 8000;
 
-require('dotenv').config(); // Load values from .env file
 
 console.log("DATABASE_URL:", process.env.DATABASE_URL);
 
