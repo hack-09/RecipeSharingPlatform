@@ -19,7 +19,7 @@ const Recipe = require('../public/Recipe');
 
 
 // Create a recipe
-router.post('/', upload.single('image'), async (req, res) => {
+router.post('/',  async (req, res) => {
   try {
     const { title, description, ingredients, instructions, cookingTime, difficulty,category, servingSize } = req.body;
     const image = req.file.filename;
