@@ -1,5 +1,4 @@
 //--- app.js  ---
-require('dotenv').config(); // Load values from .env file
 
 const express = require("express");
 const path = require("path");
