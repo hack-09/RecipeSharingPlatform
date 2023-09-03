@@ -115,6 +115,9 @@
 
   
 @media (max-width: 800px) {
+  .login, .register{
+    display: none;
+  }
   .body{
     font-size: 5rem;
   }
