@@ -6,6 +6,9 @@ const mongoose = require('mongoose');
 const ejs = require('ejs');
 const session = require('express-session'); // Step 1: Require express-session
 const cookieParser = require('cookie-parser'); // Step 2: Require cookie-parser
+const multer = require("multer"); // For handling file uploads
+const ImgurStorage = require("multer-storage-imgur");
+const imgur = require("imgur");
 
 const app = express();
 const port = 8000;
@@ -146,7 +149,94 @@ app.post("/register", (req, res) => {
 });
 
 // ----------- Recipe Submit ------------------------
-const recipeRoutes = require('./routes/recipes');
+// Create a recipe
+const storage = new ImgurStorage({ clientId: "44f43a058e09550" });
+
+const recipeSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  ingredients: {
+    type: String,
+    required: true
+  },
+  instructions: {
+    type: String,
+    required: true
+  },
+  cookingTime: {
+    type: String,
+    required: true
+  },
+  difficulty: {
+    type: String,
+    required: true
+  },
+  category: {
+    type: String,
+    required: true
+  },
+  servingSize: {
+    type: String,
+    required: true
+  },
+  image: {
+    type: String,
+    required: true
+  },
+  comments: {
+    type: Array,
+    default: [] // Initialize comments as an empty array
+  },
+  username: { // Add createdBy field to store the username
+    type: String
+  },
+});
+
+const Recipe= mongoose.model('Recipe', recipeSchema);
+
+
+const upload = multer({ storage: storage });
+
+app.post('/recipes', upload.single("image"), async (req, res) => {
+  try {
+    if (req.file) {
+      // The Imgur API response contains the image URL
+      const imgurImageUrl = req.file.link;
+
+      // Create a new Recipe object with the image URL
+      const recipe = new Recipe({
+        title: req.body.title,
+        description: req.body.description,
+        ingredients: req.body.ingredients,
+        instructions: req.body.instructions,
+        cookingTime: req.body.cookingTime,
+        difficulty: req.body.difficulty,
+        category: req.body.category,
+        servingSize: req.body.servingSize,
+        image: imgurImageUrl, // Store the image URL
+        username: req.session.username,
+      });
+
+      // Save the recipe to the database
+      await recipe.save();
+
+      res.redirect('/recipes');
+    } else {
+      res.status(400).send("Image upload failed");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server Error');
+  }
+});
+
+
 app.get("/create_recipe", checkLogin, (req, res) => {
   res.render("create_recipe", { username: req.session.username });
 });
@@ -155,7 +245,7 @@ app.get('/recipes',   (req, res) => {
 });
 
 // ----------- My Recipe -------------
-const Recipe = require('./public/Recipe');
+// const Recipe = require('./public/Recipe');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -247,8 +337,6 @@ app.post('/recipeCard/:id/comments', async (req, res) => {
     res.status(500).send('Internal server error.');
   }
 });
-
-
 
 
 

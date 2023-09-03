@@ -30,7 +30,7 @@ block content
         if recipes.length > 0
             each recipe in recipes
               div.recipe-card
-                img(src=`ImageData/${recipe.image}`, alt='Recipe Image')
+                img(src=recipe.image , alt='Recipe Image')
                 h3 #{recipe.title}
                 p #{recipe.description}
                 a.read-more(href=`/recipeCard?id=${recipe._id}`) Read More

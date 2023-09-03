@@ -22,6 +22,10 @@
     /* margin: auto; */
 }
 
+.nav-hr{
+    display: none;
+}
+
 .navbar ul {
     position: absolute;
     right: 50px;
