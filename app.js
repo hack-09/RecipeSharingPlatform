@@ -13,7 +13,6 @@ const imgur = require("imgur");
 const app = express();
 const port = 8000;
 
-require('dotenv').config(); // Load values from .env file
 
 console.log("DATABASE_URL:", process.env.DATABASE_URL);
 
