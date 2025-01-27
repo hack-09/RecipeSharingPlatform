@@ -1,3 +1,53 @@
-.env
-node_modules/
-RecipeSharingPlatform/
+# Node.js-specific files
+node_modules/           # Dependencies installed via npm/yarn
+npm-debug.log*          # Logs from npm errors
+yarn-debug.log*         # Logs from yarn errors
+yarn-error.log*         # Logs from yarn errors
+package-lock.json       # Optional, if you don't want to track this file
+yarn.lock               # Optional, if you don't want to track this file
+
+# Environment files
+.env                    # Environment variables (contains sensitive data)
+
+# OS-specific files
+.DS_Store               # macOS Finder metadata
+Thumbs.db               # Windows file system
+ehthumbs.db             # Windows file system
+
+# IDE/editor-specific files
+.vscode/                # Visual Studio Code workspace settings
+.idea/                  # WebStorm/IntelliJ project files
+*.suo                   # Visual Studio cache files
+*.ntvs*                 # Node.js Tools for Visual Studio files
+*.njsproj               # Node.js Tools for Visual Studio project files
+*.ps1                   # PowerShell script for Visual Studio
+
+# Logs and debugging
+logs/                   # Log directory
+*.log                   # Log files
+*.tgz                   # Tarballs generated during npm packaging
+*.pid                   # PID files
+*.seed                  # Database seed files
+*.sqlite3               # SQLite database files (if used)
+
+# Temporary files
+tmp/                    # Temporary files
+temp/                   # Temporary files
+*.tmp                   # Temporary files
+*.swp                   # Swap files created by text editors
+*.bak                   # Backup files
+*.old                   # Backup files
+
+# Build output
+dist/                   # Distribution folder
+build/                  # Production build folder
+
+# Testing
+coverage/               # Coverage reports from test runners
+*.cover                 # Test coverage files
+.nyc_output/            # NYC output files
+
+# Deployment
+/.vercel                # Vercel deployment files
+/.firebase              # Firebase deployment files
+/.netlify               # Netlify deployment files

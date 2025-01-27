@@ -1,0 +1,7 @@
+import type { Hub } from '@sentry/types';
+/**
+ * Checks whether given url points to Sentry server
+ * @param url url to verify
+ */
+export declare function isSentryRequestUrl(url: string, hub: Hub): boolean;
+//# sourceMappingURL=isSentryRequestUrl.d.ts.map
