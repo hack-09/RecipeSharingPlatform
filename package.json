@@ -7,11 +7,13 @@
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "html": "^1.0.0",
-    "imgur": "^2.3.0",
+    "imgur": "^1.0.2",
     "mongodb": "^5.7.0",
     "mongoose": "^7.3.4",
     "multer": "^1.4.5-lts.1",
-    "pug": "^3.0.2"
+    "multer-storage-imgur": "^1.0.4",
+    "pug": "^3.0.2",
+    "tslib": "^2.6.2"
   },
   "name": "recipe-design",
   "version": "1.0.0",
