@@ -9,6 +9,8 @@ block style
 block content
     div.container#changing-bg
       section#recipe-details
+        a(href="/recipeList" class="back-btn")
+          i(class="fas fa-arrow-left")
         div.card.background
           h2 #{recipe.title}
           p.reference Created By: #{recipe.username} 

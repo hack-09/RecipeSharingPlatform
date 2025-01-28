@@ -36,7 +36,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 3600000, // Session will expire in 1 hour of inactivity
+    maxAge: 24*3600000, // Session will expire in 1 hour of inactivity
     secure: false, // Set this to true if using HTTPS
     httpOnly: true, // This prevents JavaScript from accessing the cookie
   }
@@ -57,9 +57,9 @@ const checkLogin = (req, res, next) => {
 
 //------------------- Authentication Schema --------------------
 var authenticateSchema = new mongoose.Schema({
-  username: String,
-  email:String,
-  password: String,
+  username: { type: String, required: true},
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
   desc:String,
 });
 
@@ -151,9 +151,15 @@ app.post("/register", (req, res) => {
 
 // ----------- Recipe Submit ------------------------
 // Create a recipe
-const storage = new ImgurStorage({ clientId: "44f43a058e09550",
-  timeout: 20000   });
+// Setup Imgur Storage
+const IMGUR_CLIENT_ID="44f43a058e09550";
 
+const storage = new ImgurStorage({
+  clientId: process.env.IMGUR_CLIENT_ID || IMGUR_CLIENT_ID, // Use environment variable
+  timeout: 100000
+});
+
+// Recipe Schema
 const recipeSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
@@ -166,27 +172,31 @@ const recipeSchema = new mongoose.Schema({
   image: { type: String, required: true },
   comments: [
     {
-      text: String,
-      author: { type: mongoose.Schema.Types.ObjectId, ref: 'authenticate' }, // Store the author's userId
-      rating: Number,
-      date: Date,
+      text: { type: String, required: true },
+      author: { type: String, required: true },
+      rating: { type: Number, min: 1, max: 5 },
+      date: { type: Date, default: Date.now },
     }
   ],
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'authenticate', required: true }, // Store the userId here
+  username: {type: String, require: true},
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'authenticate', required: true },
 });
 
-const Recipe= mongoose.model('Recipe', recipeSchema);
+const Recipe = mongoose.model('Recipe', recipeSchema);
 
-
+// Multer setup for file uploads
 const upload = multer({ storage: storage });
 
+// Route to create a recipe
 app.post('/recipes', upload.single("image"), async (req, res) => {
   try {
-    if (req.file) {
+    if (req.file && req.file.link) {
       const imgurImageUrl = req.file.link;
 
-      console.log(imgurImageUrl);
-      // Use _id from session instead of username
+      if (!req.body.title || !req.body.description || !req.body.ingredients) {
+        return res.status(400).send('Missing required fields');
+      }
+      
       const recipe = new Recipe({
         title: req.body.title,
         description: req.body.description,
@@ -196,8 +206,9 @@ app.post('/recipes', upload.single("image"), async (req, res) => {
         difficulty: req.body.difficulty,
         category: req.body.category,
         servingSize: req.body.servingSize,
-        image: imgurImageUrl,
-        userId: req.session._id, // Store user _id
+        image: imgurImageUrl, // Image URL from Imgur
+        username: req.session.username,
+        userId: req.session._id,
       });
 
       await recipe.save();
@@ -211,14 +222,15 @@ app.post('/recipes', upload.single("image"), async (req, res) => {
   }
 });
 
-
+// Route to render create recipe page
 app.get("/create_recipe", checkLogin, (req, res) => {
   res.render("create_recipe", { username: req.session.username });
 });
-app.get('/recipes',   (req, res) => {
-  res.send('<script>alert("You Recipe Uploaded Successfully."); window.location.href="/create_recipe";</script>');
-});
 
+// Route to display success message and redirect
+app.get('/recipes', (req, res) => {
+  res.redirect('/create_recipe');
+});
 // ----------- My Recipe -------------
 // const Recipe = require('./public/Recipe');
 
@@ -238,6 +250,26 @@ app.get('/myrecipe', checkLogin, async (req, res) => {
   }
 });
 
+app.post('/recipeCard/:id/delete', checkLogin, async (req, res) => {
+  const recipeId = req.params.id;
+
+  try {
+    // Find the recipe by ID
+    const recipe = await Recipe.findById(recipeId);
+
+    // Check if the logged-in user is the owner
+    if (recipe.userId.toString() !== req.session._id) {
+      return res.status(403).send('You are not authorized to delete this recipe.');
+    }
+
+    // Delete the recipe
+    await Recipe.findByIdAndDelete(recipeId);
+    res.redirect('/recipeList'); // Redirect to the recipe list
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while deleting the recipe.');
+  }
+});
 
 //  ------------- Recipes List --------------
 app.get('/recipeList', checkLogin, async (req, res) => {
@@ -275,7 +307,7 @@ app.get('/recipeCard', async (req, res) => {
     if (!recipe) {
       return res.send('Recipe not found.');
     }
-    res.render('recipeCard', { recipe,username: req.session.username });
+    res.render('recipeCard', { recipe });
   } catch (err) {
     console.error(err);
     res.status(500).send('Internal server error.');
@@ -284,29 +316,46 @@ app.get('/recipeCard', async (req, res) => {
 
 // ----------------comment-----------------------
 // Add a new comment to the recipe
-app.post('/recipeCard/:id/comments', async (req, res) => {
+app.post('/recipeCard/:id/comments',checkLogin, async (req, res) => {
   try {
-    const recipeId = req.params.id;
-    const recipe = await Recipe.findById(recipeId);
+    const recipeId = req.params.id; // Get recipe ID from route parameters
 
+    // Find the recipe by ID
+    const recipe = await Recipe.findById(recipeId);
     if (!recipe) {
       return res.status(404).send('Recipe not found.');
     }
 
+    // Get comment details from the request body
     const { comment_text, rating } = req.body;
-    const comment_author = req.session.userId; // Use userId here
 
+    // Validate input fields
+    if (!comment_text || !rating) {
+      return res.status(400).send('Comment text and rating are required.');
+    }
+
+    // Get the currently logged-in user's username from session (or userId)
+    const comment_author = req.session.username; // Assuming username is stored in the session
+    if (!comment_author) {
+      return res.status(401).send('User not logged in. Please log in to comment.');
+    }
+
+    // Create a new comment object
     const newComment = {
       text: comment_text,
-      author: comment_author, // Use userId for the comment author
+      author: comment_author, // Store username or userId for tracking
       rating: rating,
-      date: new Date()
+      date: new Date(),
     };
 
+    // Add the new comment to the recipe's comments array
     recipe.comments.push(newComment);
 
+    // Save the updated recipe
     await recipe.save();
-    res.redirect(`/recipeCard?id=${recipeId}`);
+
+    // Redirect or send a success response
+    res.redirect(`/recipeCard?id=${recipeId}`); // Adjust this to match your frontend flow
   } catch (err) {
     console.error(err);
     res.status(500).send('Internal server error.');
@@ -317,5 +366,5 @@ app.post('/recipeCard/:id/comments', async (req, res) => {
 // ----------------------- Listening Port ---------------
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
-  console.log(`https://localhost:${port}`)
+  console.log(`http://localhost:${port}`)
 });
