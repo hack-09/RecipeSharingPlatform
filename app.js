@@ -70,9 +70,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-  // if (req.session.isAuthenticated) {
     res.render("home", { userId: req.session.userId, username: req.session.username });
-  // }
 });
 
 app.get("/contact", (req, res) => {
@@ -316,5 +314,5 @@ app.post('/recipeCard/:id/comments', async (req, res) => {
 // ----------------------- Listening Port ---------------
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
-  console.log(`http://localhost:${port}`)
+  console.log(`https://localhost:${port}`)
 });
