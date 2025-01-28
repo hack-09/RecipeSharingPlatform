@@ -28,8 +28,8 @@ A community-driven platform for food enthusiasts to share, discover, and celebra
 
 | Category       | Technologies                                                                 |
 |----------------|------------------------------------------------------------------------------|
-| **Frontend**   | React, Redux, Axios, React Router, CSS3                                      |
-| **Backend**    | Node.js, Express.js, MongoDB, Mongoose, JWT                                  |
+| **Frontend**   | HTML, Axios, CSS3, JavaScript                                                |
+| **Backend**    | Node.js, Express.js, MongoDB, Mongoose                                       |
 | **DevOps**     | Render, MongoDB Atlas, GitHub Actions                                        |
 | **Tools**      | Postman, Git, ESLint, Prettier                                               |
 
@@ -47,14 +47,13 @@ git clone https://github.com/hack-09/RecipeSharingPlatform.git
 
 # Install dependencies
 cd RecipeSharingPlatform
-npm run setup-dependencies
+npm install
 
 # Configure environment
-cp server/.env.example server/.env
 # Add your MongoDB URI and JWT secret in .env
 
 # Start development servers
-npm run dev
+npm run or npm start or npx nodemon app.js
 ```
 
 Access the application at `http://localhost:3000`
@@ -78,7 +77,7 @@ Experience the platform now:
 
 ## 🤝 Contributing
 
-We welcome contributions! Please read our [Contribution Guidelines](CONTRIBUTING.md) and:
+We welcome contributions!
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
