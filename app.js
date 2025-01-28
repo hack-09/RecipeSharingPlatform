@@ -205,36 +205,44 @@ const upload = multer({ storage: storage });
 
 app.post('/recipes', upload.single("image"), async (req, res) => {
   try {
-    if (req.file) {
-      // The Imgur API response contains the image URL
-      const imgurImageUrl = req.file.link;
-
-      // Create a new Recipe object with the image URL
-      const recipe = new Recipe({
-        title: req.body.title,
-        description: req.body.description,
-        ingredients: req.body.ingredients,
-        instructions: req.body.instructions,
-        cookingTime: req.body.cookingTime,
-        difficulty: req.body.difficulty,
-        category: req.body.category,
-        servingSize: req.body.servingSize,
-        image: imgurImageUrl, // Store the image URL
-        username: req.session.username,
-      });
-
-      // Save the recipe to the database
-      await recipe.save();
-
-      res.redirect('/recipes');
-    } else {
-      res.status(400).send("Image upload failed");
+    // Validate file upload
+    if (!req.file) {
+      return res.status(400).send('<script>alert("Image upload failed. Please try again."); window.location.href="/create_recipe";</script>');
     }
+
+    // Get the image URL from Imgur or local storage
+    const imgurImageUrl = req.file.link || req.file.path; // Replace with your logic for generating the image URL
+
+    // Validate required fields
+    if (!req.body.title || !req.body.description) {
+      return res.status(400).send('<script>alert("Title and Description are required."); window.location.href="/create_recipe";</script>');
+    }
+
+    // Create a new Recipe object
+    const recipe = new Recipe({
+      title: req.body.title,
+      description: req.body.description,
+      ingredients: req.body.ingredients,
+      instructions: req.body.instructions,
+      cookingTime: req.body.cookingTime,
+      difficulty: req.body.difficulty,
+      category: req.body.category,
+      servingSize: req.body.servingSize,
+      image: imgurImageUrl, // Store the image URL
+      username: req.session.username,
+    });
+
+    // Save the recipe to the database
+    await recipe.save();
+
+    // Redirect to a success page
+    res.send('<script>alert("Your recipe has been uploaded successfully!"); window.location.href="/create_recipe";</script>');
   } catch (error) {
     console.error(error);
-    res.status(500).send('Server Error');
+    res.status(500).send('<script>alert("An error occurred. Please try again."); window.location.href="/create_recipe";</script>');
   }
 });
+
 
 
 app.get("/create_recipe", checkLogin, (req, res) => {
