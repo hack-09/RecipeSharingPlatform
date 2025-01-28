@@ -17,8 +17,11 @@
     "pug": "^3.0.2",
     "tslib": "^2.6.2"
   },
+  "engines": {
+  "node": ">=16"
+  },
   "name": "recipe-design",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "This is a website for recipe sharing platform",
   "main": "app.js",
   "scripts": {
