@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Authentication Page</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" as="style">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="Authentication.css">
 </head>
 <body>
@@ -12,17 +14,16 @@
     <form id="loginForm" action="/login" method="post">
       <h1>Login</h1>
       <div class="input-container">
-        <!-- <label for="loginUsername">Username</label> -->
-        <i class="fa fa-user icon"></i>
-        <input type="text" name="username" id="loginUsername" placeholder="Username" required>
+        <!-- Replace the username with email -->
+        <i class="fa fa-envelope icon"></i>
+        <input type="email" name="email" id="loginEmail" placeholder="Email" required>
       </div>
       <div class="input-container">
-        <!-- <label for="loginPassword">Password</label> -->
         <i class="fa fa-key icon"></i>
         <input type="password" name="password" id="loginPassword" placeholder="Password" required>
       </div>
       <div class="box">
-        <label for="checkbox" class="checkbox" >Show Password</label>
+        <label for="checkbox" class="checkbox">Show Password</label>
         <input type="checkbox" class="checkbox" onclick="myFunction()">
       </div>
       <button type="submit">Login</button>
@@ -33,6 +34,7 @@
     </div>
   </div>
   <script>
+    // Function to toggle password visibility
     function myFunction() {
       var x = document.getElementById("loginPassword");
       if (x.type === "password") {

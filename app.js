@@ -70,7 +70,9 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-  res.render("home", { username: req.session.username });
+  // if (req.session.isAuthenticated) {
+    res.render("home", { userId: req.session.userId, username: req.session.username });
+  // }
 });
 
 app.get("/contact", (req, res) => {
@@ -94,18 +96,18 @@ app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "public/login.html"));
 });
 app.post("/login", (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
-  // Find the user in the database based on the provided username and password
-  authenticate.findOne({ username, password })
+  authenticate.findOne({ email, password })
     .then((user) => {
       if (!user) {
-        // User not found, display an alert message
-        res.send('<script>alert("Username or password is incorrect. Please try again or sign up for a new account."); window.location.href="/login";</script>');
+        res.send('<script>alert("email or password is incorrect. Please try again or sign up for a new account."); window.location.href="/login";</script>');
       } else {
-        // User is found, set isAuthenticated in the session
+        // Store the user's _id in the session
         req.session.isAuthenticated = true;
-        req.session.username = user.username; // You can store other user data in the session as well
+        req.session._id = user._id; // Store user _id
+        req.session.username = user.username;
+        req.session.email = user.email; 
         res.redirect("/");
       }
     })
@@ -153,49 +155,24 @@ app.post("/register", (req, res) => {
 const storage = new ImgurStorage({ clientId: "44f43a058e09550" });
 
 const recipeSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String,
-    required: true
-  },
-  ingredients: {
-    type: String,
-    required: true
-  },
-  instructions: {
-    type: String,
-    required: true
-  },
-  cookingTime: {
-    type: String,
-    required: true
-  },
-  difficulty: {
-    type: String,
-    required: true
-  },
-  category: {
-    type: String,
-    required: true
-  },
-  servingSize: {
-    type: String,
-    required: true
-  },
-  image: {
-    type: String,
-    required: true
-  },
-  comments: {
-    type: Array,
-    default: [] // Initialize comments as an empty array
-  },
-  username: { // Add createdBy field to store the username
-    type: String
-  },
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  ingredients: { type: String, required: true },
+  instructions: { type: String, required: true },
+  cookingTime: { type: String, required: true },
+  difficulty: { type: String, required: true },
+  category: { type: String, required: true },
+  servingSize: { type: String, required: true },
+  image: { type: String, required: true },
+  comments: [
+    {
+      text: String,
+      author: { type: mongoose.Schema.Types.ObjectId, ref: 'authenticate' }, // Store the author's userId
+      rating: Number,
+      date: Date,
+    }
+  ],
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'authenticate', required: true }, // Store the userId here
 });
 
 const Recipe= mongoose.model('Recipe', recipeSchema);
@@ -206,10 +183,9 @@ const upload = multer({ storage: storage });
 app.post('/recipes', upload.single("image"), async (req, res) => {
   try {
     if (req.file) {
-      // The Imgur API response contains the image URL
       const imgurImageUrl = req.file.link;
 
-      // Create a new Recipe object with the image URL
+      // Use _id from session instead of username
       const recipe = new Recipe({
         title: req.body.title,
         description: req.body.description,
@@ -219,13 +195,11 @@ app.post('/recipes', upload.single("image"), async (req, res) => {
         difficulty: req.body.difficulty,
         category: req.body.category,
         servingSize: req.body.servingSize,
-        image: imgurImageUrl, // Store the image URL
-        username: req.session.username,
+        image: imgurImageUrl,
+        userId: req.session._id, // Store user _id
       });
 
-      // Save the recipe to the database
       await recipe.save();
-
       res.redirect('/recipes');
     } else {
       res.status(400).send("Image upload failed");
@@ -254,8 +228,7 @@ app.set('view engine', 'pug');
 // My Recipe
 app.get('/myrecipe', checkLogin, async (req, res) => {
   try {
-    const loggedInUsername = req.session.username; 
-    const recipes = await Recipe.find({ username: loggedInUsername });
+    const recipes = await Recipe.find({userId: req.session._id});
 
     res.render('myRecipe', { recipes });
   } catch (err) {
@@ -318,14 +291,15 @@ app.post('/recipeCard/:id/comments', async (req, res) => {
     if (!recipe) {
       return res.status(404).send('Recipe not found.');
     }
+
     const { comment_text, rating } = req.body;
-    const comment_author = req.session.username;
+    const comment_author = req.session.userId; // Use userId here
 
     const newComment = {
       text: comment_text,
-      author: comment_author,
+      author: comment_author, // Use userId for the comment author
       rating: rating,
-      date: new Date() 
+      date: new Date()
     };
 
     recipe.comments.push(newComment);
@@ -339,8 +313,8 @@ app.post('/recipeCard/:id/comments', async (req, res) => {
 });
 
 
-
 // ----------------------- Listening Port ---------------
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
+  console.log(`http://localhost:${port}`)
 });
