@@ -1,32 +1,54 @@
-//- ***
 extends base.pug
 
 block style 
-    style 
-        include ../public/navbar.css
-        include ../public/myRecipe.css
+  style 
+    include ../public/navbar.css
+    include ../public/myRecipe.css
+  link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css')
 
 block content
-    .container.background
-      h1 My Recipe
-      if recipes.length > 0
-        each recipe in recipes
-          .card.background
+  .container.background
+    h1 My Recipe
+    if recipes.length > 0
+      each recipe in recipes
+        .card.background
+          div.card-head
             h2 #{recipe.title}
-            .box.background
-              .text-box.background
-                p.desc #{recipe.description}
-                p Ingredients: 
-                p.detail #{recipe.ingredients}
-                p Instructions:
-                p.detail #{recipe.instructions}
-                p Cooking Time:
-                p.detail #{recipe.cookingTime}
-                p Difficulty:
-                p.detail #{recipe.difficulty}
-                p Serving Size:
-                p.detail #{recipe.servingSize}
-                //- p Created By: #{recipe.username} 
-              img(src=recipe.image , alt='Recipe Image')
-      else
-        p No recipes found
+            if loggedInUserId === recipe.ownerId
+              form.delete-form(action=`/recipeCard/${recipe._id}/delete`, method="POST")
+                button.delete-btn(
+                  type="button"
+                  data-recipe-id=recipe._id
+                  aria-label="Delete recipe"
+                )
+                  i.fas.fa-trash
+          .box.background
+            .text-box.background
+              p.desc #{recipe.description}
+              p Ingredients: 
+              p.detail #{recipe.ingredients}
+              p Instructions:
+              p.detail #{recipe.instructions}
+              p Cooking Time:
+              p.detail #{recipe.cookingTime}
+              p Difficulty:
+              p.detail #{recipe.difficulty}
+              p Serving Size:
+              p.detail #{recipe.servingSize}
+            img(src=recipe.image , alt='Recipe Image')
+    else
+      p No recipes found
+
+block scripts
+  script.
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', (event) => {
+          const recipeId = button.dataset.recipeId;
+          const confirmed = confirm("Are you sure you want to delete this recipe?");
+          if (confirmed) {
+            event.target.closest('form.delete-form').submit();
+          }
+        });
+      });
+    });

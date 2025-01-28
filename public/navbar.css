@@ -98,6 +98,9 @@ footer ul li a {
     margin-top: 20px;
 }
 
+.social-icons:hover{
+    width: 20px;
+}
 .social-icons img {
     width: 50px !important;
     height: 50px !important;

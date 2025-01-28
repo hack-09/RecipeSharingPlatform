@@ -50,9 +50,14 @@ h2 {
   background: url('img/myRecipe.jpg') center center/cover;
 }
 
+.card-head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .card {
   box-shadow: 0 10px 20px rgb(143, 173, 249);
-  background-color: rgb(10, 255, 239);
+  background-color: rgb(118 224 217);
   border-radius: 30px;
   margin: 30px 60px;
 }
@@ -89,6 +94,31 @@ p {
   font-weight: normal;
   color: rgb(32, 119, 0);
   margin-bottom: 35px;
+}
+
+.delete-form {
+  margin-top: 10px;
+}
+
+.delete-btn {
+  display: flex;
+  align-items: center;
+  background-color: #dc3545; /* Red color for delete */
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-btn i {
+  margin-right: 6px;
+}
+
+.delete-btn:hover {
+  background-color: #c82333; /* Darker red on hover */
 }
 
 @media screen and (max-width:1140px) {
@@ -228,6 +258,54 @@ p {
   color: gold;
 }
 
+.back-btn {
+  position: fixed; /* Fix the back button */
+  top: 100px; /* Distance from the top */
+  left: 20px; /* Distance from the left */
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa; /* Optional: Background color */
+  padding: 10px 15px; /* Button padding */
+  border-radius: 8px; /* Rounded corners */
+  text-decoration: none; /* Remove underline */
+  color: #007bff; /* Text color */
+  font-size: 16px; /* Default font size */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+  z-index: 1000; /* Ensure it's above other content */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover effect */
+}
+
+.back-btn i {
+  margin-right: 8px; /* Space between icon and text */
+}
+
+.back-btn:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .back-btn {
+    left: 10px;
+    padding: 8px 12px; /* Reduce padding */
+    font-size: 14px; /* Slightly smaller text */
+  }
+
+  .back-btn i {
+    margin-right: 5px; /* Adjust spacing */
+  }
+}
+
+@media (max-width: 480px) {
+  .back-btn {
+    top: 80px;
+    left: 8px;
+    padding: 6px 10px;
+    font-size: 12px; /* Smaller font for very small screens */
+  }
+}
+
 /*----------------------------- Comment Form  styles -------------------------*/
 .userComment {
   box-sizing: border-box;
@@ -241,7 +319,7 @@ p {
   border-radius: 5px;
 }
 
-form {
+.userComment form {
   display: flex;
   flex-direction: row;
   background-color: rgb(226, 225, 225);
@@ -272,7 +350,7 @@ form textarea {
 }
 
 
-form button[type="submit"] {
+.userComment button[type="submit"] {
   background-color: #007bff;
   color: #fff;
   height: 50px;
@@ -283,7 +361,7 @@ form button[type="submit"] {
   cursor: pointer;
 }
 
-form button[type="submit"]:hover {
+.userComment button[type="submit"]:hover {
   background-color: #204d87;
 }
 
