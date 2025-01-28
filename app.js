@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser'); // Step 2: Require cookie-parser
 const multer = require("multer"); // For handling file uploads
 const ImgurStorage = require("multer-storage-imgur");
 const imgur = require("imgur");
+const got = require('got');
 
 const app = express();
 const port = 8000;
@@ -150,7 +151,8 @@ app.post("/register", (req, res) => {
 
 // ----------- Recipe Submit ------------------------
 // Create a recipe
-const storage = new ImgurStorage({ clientId: "44f43a058e09550" });
+const storage = new ImgurStorage({ clientId: "44f43a058e09550",
+  timeout: 20000   });
 
 const recipeSchema = new mongoose.Schema({
   title: { type: String, required: true },
@@ -183,6 +185,7 @@ app.post('/recipes', upload.single("image"), async (req, res) => {
     if (req.file) {
       const imgurImageUrl = req.file.link;
 
+      console.log(imgurImageUrl);
       // Use _id from session instead of username
       const recipe = new Recipe({
         title: req.body.title,
